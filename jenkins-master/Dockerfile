@@ -27,6 +27,7 @@ RUN mkdir /var/log/jenkins
 RUN mkdir /var/cache/jenkins
 RUN chown -R jenkins:jenkins /var/log/jenkins
 RUN chown -R jenkins:jenkins /var/cache/jenkins
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 RUN usermod -a -G docker jenkins
 
 # Install jenkins plugins

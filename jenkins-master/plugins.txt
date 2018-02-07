@@ -1,3 +1,5 @@
-scm-api:latest
+build-timestamp:latest
+docker-build-publish:latest
 git-client:latest
 git:latest
+scm-api:latest
