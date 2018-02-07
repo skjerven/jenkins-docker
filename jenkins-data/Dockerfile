@@ -5,7 +5,9 @@ RUN useradd -d "/var/jenkins_home" -u 1000 -m -s /bin/bash jenkins
 
 # Create the folders and volume mount points
 RUN mkdir -p /var/log/jenkins
+RUN mkdir -p /var/cache/jenkins
 RUN chown -R jenkins:jenkins /var/log/jenkins
+RUN chown -R jenkins:jenkins /var/cache/jenkins
 VOLUME ["/var/log/jenkins", "/var/jenkins_home"]
 
 USER jenkins
