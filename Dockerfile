@@ -19,13 +19,17 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install docker-ce
 
+# Add goss and dgoss for running Docker container tests
+RUN curl -fsSL https://goss.rocks/install | sh
+
+# Set up directories for jenkins
 RUN mkdir /var/log/jenkins
 RUN mkdir /var/cache/jenkins
 RUN chown -R jenkins:jenkins /var/log/jenkins
 RUN chown -R jenkins:jenkins /var/cache/jenkins
 RUN usermod -a -G docker jenkins
-RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
+# Install jenkins plugins
 USER jenkins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
