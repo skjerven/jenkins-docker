@@ -2,4 +2,5 @@ build-timestamp:latest
 docker-build-publish:latest
 git-client:latest
 git:latest
+publish-over-ssh:latest
 scm-api:latest
