@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:latest
 
-MAINTAINER brian.skjerven@pawsey.org.au
+MAINTAINER Brian Skjerven (brian.skjerven@pawsey.org.au)
 
 USER root
 
@@ -34,4 +34,6 @@ RUN usermod -a -G docker jenkins
 USER jenkins
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
-ENV JAVA_OPTS="-Xmx8192m"
+
+# Set Java options - increase JVM memory and don't run Jenkins setup wizard
+ENV JAVA_OPTS="-Xmx8192 -Djenkins.install.runSetupWizard=false"
