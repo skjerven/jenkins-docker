@@ -75,3 +75,5 @@ subversion
 pipeline-milestone-step
 workflow-cps
 ansicolor
+jabber
+instant-messaging
