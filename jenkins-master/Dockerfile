@@ -22,7 +22,7 @@ RUN apt-get update && \
 # Add goss and dgoss for running Docker container tests
 RUN curl -fsSL https://goss.rocks/install | sh
 
-# Set up directories for jenkins
+# Set up directories for Jenkins
 RUN mkdir /var/log/jenkins
 RUN mkdir /var/cache/jenkins
 RUN chown -R jenkins:jenkins /var/log/jenkins
@@ -30,13 +30,19 @@ RUN chown -R jenkins:jenkins /var/cache/jenkins
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 RUN usermod -a -G docker jenkins
 
-# Install jenkins plugins
 USER jenkins
+
+# Use Jenkins script to install recommended plugsin (and some extra ones)
 COPY plugins.txt /usr/share/jenkins/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 
-# Set Java options - increase JVM memory and don't run Jenkins setup wizard
+# Set Java options
+#   - increase JVM memory
+#   - turn off Jenkins setup wizard (we've already installed plugins above)
 ENV JAVA_OPTS="-Xmx8192 -Djenkins.install.runSetupWizard=false"
 
-# Set Jenkins options - increase default number of handler threads and set max
-ENV JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300"
+# Set Jenkins options
+#   - increase default number of handler threads
+#   - set max number of handler threads
+#   -  
+ENV JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300 --logfile=/var/log/jenkins/jenkins.log"
