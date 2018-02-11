@@ -37,3 +37,6 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 
 # Set Java options - increase JVM memory and don't run Jenkins setup wizard
 ENV JAVA_OPTS="-Xmx8192 -Djenkins.install.runSetupWizard=false"
+
+# Set Jenkins options - increase default number of handler threads and set max
+ENV JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300"
