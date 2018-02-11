@@ -17,10 +17,11 @@ RUN apt-get update && \
       $(lsb_release -cs) \
       stable" && \
     apt-get update && \
-    apt-get -y install docker-ce
+    apt-get -y install docker-ce && \
+    rm -rf /var/lib/apt/lists/*
 
 # Add goss and dgoss for running Docker container tests
-RUN curl -fsSL https://goss.rocks/install | sh
+#RUN curl -fsSL https://goss.rocks/install | sh
 
 # Set up directories for Jenkins
 RUN mkdir /var/log/jenkins
@@ -39,10 +40,10 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 # Set Java options
 #   - increase JVM memory
 #   - turn off Jenkins setup wizard (we've already installed plugins above)
-ENV JAVA_OPTS="-Xmx8192 -Djenkins.install.runSetupWizard=false"
+# -Djenkins.install.runSetupWizard=false
+ENV JAVA_OPTS="-Xmx8192m"
 
 # Set Jenkins options
-#   - increase default number of handler threads
 #   - set max number of handler threads
-#   -  
-ENV JENKINS_OPTS="--handlerCountStartup=100 --handlerCountMax=300 --logfile=/var/log/jenkins/jenkins.log"
+#   - specify log file
+ENV JENKINS_OPTS="--handlerCountMax=300 --logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war"
