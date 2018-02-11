@@ -1,0 +1,23 @@
+jenkinsdata:
+ build: jenkins-data
+ environment:
+  - TZ=Australia/Perth
+jenkinsmaster:
+ build: jenkins-master
+ environment:
+  - TZ=Australia/Perth
+ volumes_from:
+  - jenkinsdata
+ volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /usr/bin/docker:/usr/bin/docker
+ ports:
+  - "50000:50000"
+jenkinsnginx:
+ build: jenkins-nginx
+ environment:
+  - TZ=Australia/Perth
+ ports:
+  - "80:80"
+ links:
+  - jenkinsmaster:jenkins-master
