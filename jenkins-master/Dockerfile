@@ -40,8 +40,9 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/plugins.txt
 # Set Java options
 #   - increase JVM memory
 #   - turn off Jenkins setup wizard (we've already installed plugins above)
+#   - Enable STARTTLS for using Pawsey's email server in Jenkins
 # -Djenkins.install.runSetupWizard=false
-ENV JAVA_OPTS="-Xmx8192m"
+ENV JAVA_OPTS="-Xmx8192m -Dmail.smtp.starttls.enable='true'"
 
 # Set Jenkins options
 #   - set max number of handler threads
